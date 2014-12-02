@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export INSTALL_ROOT=$(shell pwd)
+JAVA_HOME=/usr/lib/jvm/default-java
+
+%:
+	dh $@ --with javahelper
+
+override_dh_auto_build:
+	mvn
+
+override_dh_auto_clean:
+	mvn clean
+	dh_auto_clean
+	rm -f debian/manpages/*.1
+
+override_dh_install:
+	mvn install
+	dh_install
+
+override_dh_installinit:
+	dh_installinit
