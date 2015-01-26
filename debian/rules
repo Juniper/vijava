@@ -4,10 +4,20 @@
 export INSTALL_ROOT=$(shell pwd)
 JAVA_HOME=/usr/lib/jvm/default-java
 
+SRC_VER := $(shell cat ./../../controller/src/base/version.info)
+BUILDTIME := $(shell date -u +%m%d%Y)
+
+ifdef SRC_VER
+BUILDTAG = $(SRC_VER)-$(BUILDTIME)
+else
+BUILDTAG = $(BUILDTIME)
+endif
+
 %:
 	dh $@ --with javahelper
 
 override_dh_auto_build:
+	cat debian/changelog.in | sed 's,BUILDTAG,$(BUILDTAG),g' > debian/changelog
 
 override_dh_auto_clean:
 	dh_auto_clean
