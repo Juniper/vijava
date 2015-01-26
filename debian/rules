@@ -20,7 +20,6 @@ override_dh_auto_build:
 	cat debian/changelog.in | sed 's,BUILDTAG,$(BUILDTAG),g' > debian/changelog
 
 override_dh_auto_clean:
-	dh_auto_clean
 	rm -f debian/manpages/*.1
 
 override_dh_install:
