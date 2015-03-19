@@ -4,14 +4,9 @@
 export INSTALL_ROOT=$(shell pwd)
 JAVA_HOME=/usr/lib/jvm/default-java
 
-SRC_VER := $(shell cat ./../../controller/src/base/version.info)
-BUILDTIME := $(shell date -u +%m%d%Y)
-
-ifdef SRC_VER
-BUILDTAG = $(SRC_VER)-$(BUILDTIME)
-else
-BUILDTAG = $(BUILDTIME)
-endif
+SRC_VER ?= $(shell cat ./../controller/src/base/version.info)
+BUILDNUM ?= $(shell date -u +%m%d%Y)
+export BUILDTAG ?= $(SRC_VER)-$(BUILDNUM)
 
 %:
 	dh $@ --with javahelper
