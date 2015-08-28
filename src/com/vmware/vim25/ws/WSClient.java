@@ -68,6 +68,7 @@ final public class WSClient
   private final static String SOAP_ACTION_V55 = "urn:vim25/5.5";
   
   private URL baseUrl = null;
+  HttpURLConnection postCon;
   private String cookie = null;
   private String vimNameSpace = null;
   private String soapAction = null;
@@ -128,6 +129,28 @@ final public class WSClient
     }
   }
   
+  public Object invoke(String methodName, Argument[] paras, String returnType,
+          boolean allow_disconnect) throws RemoteException
+  {
+    String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
+    
+    InputStream is = null;
+    try 
+    {
+      is = post(soapMsg, allow_disconnect);
+      return xmlGen.fromXML(returnType, is);
+    }
+    catch (Exception e1) 
+    {
+      throw new RemoteException("VI SDK invoke exception:" + e1);
+    }
+    finally
+    {
+      if(is!=null) 
+        try { is.close(); } catch(IOException ioe) {}
+    }
+  }
+  
   public StringBuffer invokeAsString(String methodName, Argument[] paras) throws RemoteException
   {
     String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
@@ -142,9 +165,25 @@ final public class WSClient
     }
   }
 
+  public InputStream post(String soapMsg, boolean allow_disconnect) throws IOException {
+  
+      if (allow_disconnect) {
+          // save this for disconnect
+          postCon = (HttpURLConnection) baseUrl.openConnection();
+      }
+      
+      return post(soapMsg, postCon);
+  }
+  
   public InputStream post(String soapMsg) throws IOException
   {
     HttpURLConnection postCon = (HttpURLConnection) baseUrl.openConnection();
+    return post(soapMsg, postCon);
+    
+  }
+  
+  private InputStream post(String soapMsg, HttpURLConnection postCon) 
+          throws IOException {
     
     if(connectTimeout > 0)
       postCon.setConnectTimeout(connectTimeout);
@@ -201,6 +240,14 @@ final public class WSClient
     this.baseUrl = baseUrl;
   }
 
+  public void disconnect()
+  {
+    if (postCon != null) {
+        postCon.disconnect();
+        postCon = null;
+    }
+  }
+  
   public String getCookie()
   {
     return cookie;

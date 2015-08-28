@@ -119,6 +119,11 @@ public class PropertyCollector extends ManagedObject
 		return getVimService().waitForUpdates(getMOR(), version);
 	}
 	
+	public void stopUpdates()
+    {
+        getVimService().stopUpdates();
+    }
+	
 	/** @since SDK4.1 */
   public UpdateSet waitForUpdatesEx(String version, WaitOptions options) throws InvalidCollectorVersion, RuntimeFault, RemoteException
   {
