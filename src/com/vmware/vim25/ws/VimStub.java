@@ -81,8 +81,13 @@ public class VimStub
     Argument[] paras = new Argument[2];
     paras[0] = new Argument("_this", "ManagedObjectReference", _this);
     paras[1] = new Argument("version", "String", version);
-    return (UpdateSet) wsc.invoke("WaitForUpdates", paras, "UpdateSet");
+    return (UpdateSet) wsc.invoke("WaitForUpdates", paras, "UpdateSet", true);
   }
+  
+  public void stopUpdates()  {
+      wsc.disconnect();
+  }
+  
   public void cancelWaitForUpdates(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
     Argument[] paras = new Argument[1];
     paras[0] = new Argument("_this", "ManagedObjectReference", _this);
