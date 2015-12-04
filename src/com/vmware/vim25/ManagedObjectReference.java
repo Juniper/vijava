@@ -62,4 +62,17 @@ public class ManagedObjectReference {
    public void set_value(String val) {
      this.val = val;
    }
+   
+   @Override
+   public boolean equals(Object obj) {       
+       if (!(obj instanceof ManagedObjectReference)) {
+           throw new IllegalArgumentException("Types do not match");
+       }
+       
+       ManagedObjectReference mor = (ManagedObjectReference)obj;
+       if (mor == null) {
+           return false;
+       }
+       return (this.type.equals(mor.type) && this.val.equals(mor.val));
+   }
 }
