@@ -46,7 +46,7 @@ import com.vmware.vim25.mo.PropertyFilter;
  * @author Steve JIN (sjin@vmware.com)
  */
 
-class ManagedObjectWatcher extends Observable implements Runnable 
+public class ManagedObjectWatcher extends Observable implements Runnable 
 {
     private PropertyCollector pc;
     private Vector<PropertyFilter> filters = new Vector<PropertyFilter>();
