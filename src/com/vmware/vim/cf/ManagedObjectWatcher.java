@@ -37,6 +37,7 @@ import com.vmware.vim25.ObjectSpec;
 import com.vmware.vim25.PropertyFilterSpec;
 import com.vmware.vim25.PropertyFilterUpdate;
 import com.vmware.vim25.PropertySpec;
+import com.vmware.vim25.RuntimeFault;
 import com.vmware.vim25.UpdateSet;
 import com.vmware.vim25.mo.ManagedObject;
 import com.vmware.vim25.mo.PropertyCollector;
