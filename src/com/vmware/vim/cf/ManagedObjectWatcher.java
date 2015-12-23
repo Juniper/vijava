@@ -126,5 +126,6 @@ public class ManagedObjectWatcher extends Observable implements Runnable
                 e.printStackTrace();
             }
         }
+        filters.removeAllElements();
     }
 }
