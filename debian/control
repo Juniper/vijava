@@ -1,0 +1,13 @@
+Source: libcontrail-vijava
+Section: java
+Priority: optional
+Maintainer: OpenContrail developers <dev@lists.opencontrail.org>
+Build-Depends: debhelper (>= 9), javahelper
+Standards-Version: 3.9.3
+Homepage: https://github.com/Juniper/vijava.git
+
+Package: libcontrail-vijava
+Architecture: all
+Depends: ${java:Depends}, ${misc:Depends}
+Description: VIJAVA Library
+ This is contrail copy of vijava library for vCenter.
